@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity PDF Toolchain</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>PDF Toolchain</h1>
+            <p>Merge and split PDFs quickly and offline.</p>
+        </header>
+
+        <main>
+            <div id="drop-area" class="drop-area">
+                <h2>Drag & Drop PDFs</h2>
+                <p>or</p>
+                <input type="file" id="file-input" multiple accept=".pdf">
+                <label for="file-input" class="btn">Select Files</label>
+            </div>
+
+            <div class="progress-container">
+                <progress id="upload-progress" value="0" max="100"></progress>
+                <span id="progress-text">0%</span>
+            </div>
+
+            <div id="gallery" class="gallery"></div>
+            
+            <div class="actions">
+                <button id="btn-merge" class="btn primary" disabled>Merge PDFs</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

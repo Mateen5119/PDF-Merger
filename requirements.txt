@@ -1,0 +1,5 @@
+flask
+pywebview
+PyPDF2
+spire.pdf
+pyinstaller
