@@ -26,11 +26,12 @@ def merge_pdfs_route():
         return "No file part", 400
     
     files = request.files.getlist('pdfs')
+    pages_list = request.form.getlist('pages')
     if not files:
         return "No selected file", 400
     
     try:
-        buffer = merge_pdfs(files)
+        buffer = merge_pdfs(files, pages_list)
         return send_file(
             buffer,
             as_attachment=True,
@@ -41,9 +42,29 @@ def merge_pdfs_route():
         print(f"Error merging: {e}")
         return str(e), 500
 
+import base64
+
 class API:
     def get_info(self):
         return "PDF Toolchain API Initialized."
+
+    def save_pdf(self, b64_data):
+        try:
+            window = webview.windows[0]
+            result = window.create_file_dialog(
+                webview.SAVE_DIALOG, 
+                directory='', 
+                save_filename='merged.pdf'
+            )
+            if result:
+                file_path = result if isinstance(result, str) else result[0]
+                with open(file_path, 'wb') as f:
+                    f.write(base64.b64decode(b64_data))
+                return f"Saved to {file_path}"
+            return "Save cancelled"
+        except Exception as e:
+            print(f"Error saving PDF: {e}")
+            return str(e)
 
 def start_server():
     app.run(host='127.0.0.1', port=5000, threaded=True)
